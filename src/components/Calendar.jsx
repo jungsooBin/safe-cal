@@ -21,21 +21,29 @@ class SafeCalendar extends Component {
   }
 
   async fetchData() {
-    const options = { decrypt: true };
-    let file = await getFile("events.json", options);
-    let events = JSON.parse(file || "[]");
+    const options = { decrypt: false };
+    let file = await getFile("events2.json", options);
+
+
+    const events = await JSON.parse(file || "[]");
+    const fetchEvents = events.map((event) => (
+      {name: event.name,
+        start: new Date(event.start),
+        end: new Date(event.end)
+    }))
     this.setState({
-      events
+      events:fetchEvents
     });
   }
 
   async saveNewEvent(event) {
+  
     await this.setState({
       events: [...this.state.events, event]
     });
     let events = this.state.events;
-    const options = { encrypt: true };
-    await putFile("events.json", JSON.stringify(events), options);
+    const options = { encrypt: false };
+    await putFile("events2.json", JSON.stringify(events), options);
   }
 
   render() {
