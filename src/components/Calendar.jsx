@@ -24,7 +24,6 @@ class SafeCalendar extends Component {
     const options = { decrypt: true };
     let file = await getFile("events.json", options);
     let events = JSON.parse(file || "[]");
-    console.log(events);
     this.setState({
       events
     });
@@ -55,8 +54,8 @@ class SafeCalendar extends Component {
             let eventName = await prompt("What is the name of the event?");
             this.saveNewEvent({
               name: eventName,
-              start: slotInfo.start,
-              end: slotInfo.end
+              start: new Date(slotInfo.start),
+              end: new Date(slotInfo.end)
             });
           }}
         />
