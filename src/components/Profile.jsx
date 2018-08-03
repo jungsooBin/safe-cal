@@ -1,54 +1,48 @@
-import React, { Component } from 'react';
-import {
-  isSignInPending,
-  loadUserData,
-  Person,
-} from 'blockstack';
+import React, { Component } from "react";
+import { isSignInPending, loadUserData, Person } from "blockstack";
 
-const avatarFallbackImage = 'https://s3.amazonaws.com/onename/avatar-placeholder.png';
+const avatarFallbackImage =
+  "https://s3.amazonaws.com/onename/avatar-placeholder.png";
 
 export default class Profile extends Component {
   constructor(props) {
-  	super(props);
+    super(props);
 
-  	this.state = {
-  	  person: {
-  	  	name() {
-          return 'Anonymous';
+    this.state = {
+      person: {
+        name() {
+          return "Anonymous";
         },
-  	  	avatarUrl() {
-  	  	  return avatarFallbackImage;
-  	  	},
-  	  },
-  	};
+        avatarUrl() {
+          return avatarFallbackImage;
+        }
+      }
+    };
   }
 
   render() {
     const { handleSignOut } = this.props;
     const { person } = this.state;
-    return (
-      !isSignInPending() ?
-      <div className="panel-welcome" id="section-2">
-        <div className="avatar-section">
-          <img src={ person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage } className="img-rounded avatar" id="avatar-image" />
+    return !isSignInPending() ? (
+      <div id="profile-container">
+        <div id="image-container">
+          <img
+            src={person.avatarUrl() ? person.avatarUrl() : avatarFallbackImage}
+          />
         </div>
-        <h1>Hello, <span id="heading-name">{ person.name() ? person.name() : 'Nameless Person' }</span>!</h1>
-        <p className="lead">
-          <button
-            className="btn btn-primary btn-lg"
-            id="signout-button"
-            onClick={ handleSignOut.bind(this) }
-          >
-            Logout
+        <div id="info-container">
+          <h3>Hey, {person.name() ? person.name() : "Nameless Person"}!</h3>
+          <button id="signout-button" onClick={handleSignOut.bind(this)}>
+            Signout
           </button>
-        </p>
-      </div> : null
-    );
+        </div>
+      </div>
+    ) : null;
   }
 
   componentWillMount() {
     this.setState({
-      person: new Person(loadUserData().profile),
+      person: new Person(loadUserData().profile)
     });
   }
 }

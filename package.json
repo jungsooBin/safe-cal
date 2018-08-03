@@ -1,7 +1,7 @@
 {
-  "name": "hello-blockstack",
-  "version": "0.0.0",
-  "description": "A simple Blockstack app using ReactJS",
+  "name": "safe-calendar",
+  "version": "1.0.0",
+  "description": "A decentralized and encrypted calendar app on Blockstack",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server",
@@ -36,7 +36,9 @@
   "dependencies": {
     "blockstack": "^0.15.0",
     "bootstrap": "^3.3.7",
+    "moment": "^2.22.2",
     "react": "^15.5.4",
+    "react-big-calendar": "^0.19.2",
     "react-dom": "^15.5.4"
   }
 }
