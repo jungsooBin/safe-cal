@@ -21,7 +21,7 @@ class SafeCalendar extends Component {
   }
 
   async fetchData() {
-    const options = { decrypt: false };
+    const options = { decrypt: true };
     let file = await getFile("events2.json", options);
 
 
@@ -42,10 +42,20 @@ class SafeCalendar extends Component {
       events: [...this.state.events, event]
     });
     let events = this.state.events;
-    const options = { encrypt: false };
+    const options = { encrypt: true };
+    const upload = await putFile("events2.json", JSON.stringify(events), options);
+    // console.log(upload)
+  }
+  
+  async deleteEvent(selectedEvent) {
+    await this.setState({
+      events: [...this.state.events.filter(event => selectedEvent !== event)]
+    });
+    let events = this.state.events;
+    const options = { encrypt: true };
     await putFile("events2.json", JSON.stringify(events), options);
   }
-
+  
   render() {
     return (
       <div id="calendar-container">
@@ -65,6 +75,10 @@ class SafeCalendar extends Component {
               start: new Date(slotInfo.start),
               end: new Date(slotInfo.end)
             });
+          }}
+
+          onSelectEvent= { selectedEvent => {
+            this.deleteEvent(selectedEvent)
           }}
         />
       </div>
