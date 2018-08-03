@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blockstack/hello-blockstack.git"
+    "url": "git+https://github.com/stackathon-dapp/safe-cal.git"
   },
   "bugs": {
-    "url": "https://github.com/blockstack/hello-blockstack/issues"
+    "url": "https://github.com/stackathon-dapp/safe-cal/issues"
   },
-  "homepage": "https://github.com/blockstack/hello-blockstack#readme",
+  "homepage": "https://github.com/stackathon-dapp/safe-cal#readme",
   "author": "",
   "license": "MIT",
   "devDependencies": {

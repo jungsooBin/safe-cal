@@ -11,8 +11,12 @@ import {
 } from "blockstack";
 
 export default class App extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    if (isSignInPending()) {
+      handlePendingSignIn().then(userData => {
+        window.location = window.location.origin;
+      });
+    }
   }
 
   handleSignIn(e) {
@@ -38,13 +42,5 @@ export default class App extends Component {
         )}
       </div>
     );
-  }
-
-  componentWillMount() {
-    if (isSignInPending()) {
-      handlePendingSignIn().then(userData => {
-        window.location = window.location.origin;
-      });
-    }
   }
 }

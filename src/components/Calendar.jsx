@@ -7,13 +7,12 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
 
-class SafeCalendar extends Component {
+export default class SafeCalendar extends Component {
   constructor() {
     super();
     this.state = {
       events: []
     };
-    this.saveNewEvent = this.saveNewEvent.bind(this);
   }
 
   componentDidMount() {
@@ -22,40 +21,36 @@ class SafeCalendar extends Component {
 
   async fetchData() {
     const options = { decrypt: true };
-    let file = await getFile("schedule.json", options);
-
-
+    const file = await getFile("schedule.json", options);
     const events = await JSON.parse(file || "[]");
-    const fetchEvents = events.map((event) => (
-      {name: event.name,
-        start: new Date(event.start),
-        end: new Date(event.end)
-    }))
+    const fetchEvents = events.map(event => ({
+      name: event.name,
+      start: new Date(event.start),
+      end: new Date(event.end)
+    }));
     this.setState({
-      events:fetchEvents
+      events: fetchEvents
     });
   }
 
   async saveNewEvent(event) {
-  
     await this.setState({
       events: [...this.state.events, event]
     });
-    let events = this.state.events;
-    const options = { encrypt: true };
-    const upload = await putFile("schedule.json", JSON.stringify(events), options);
-    // console.log(upload)
-  }
-  
-  async deleteEvent(selectedEvent) {
-    await this.setState({
-      events: [...this.state.events.filter(event => selectedEvent !== event)]
-    });
-    let events = this.state.events;
+    const events = this.state.events;
     const options = { encrypt: true };
     await putFile("schedule.json", JSON.stringify(events), options);
   }
-  
+
+  async deleteEvent(selectedEvent) {
+    await this.setState({
+      events: [...this.state.events.filter(event => event !== selectedEvent)]
+    });
+    const events = this.state.events;
+    const options = { encrypt: true };
+    await putFile("schedule.json", JSON.stringify(events), options);
+  }
+
   render() {
     return (
       <div id="calendar-container">
@@ -69,21 +64,18 @@ class SafeCalendar extends Component {
             day: true
           }}
           onSelectSlot={async slotInfo => {
-            let eventName = await prompt("What is the name of the event?");
+            const eventName = await prompt("What is the name of the event?");
             this.saveNewEvent({
               name: eventName,
               start: new Date(slotInfo.start),
               end: new Date(slotInfo.end)
             });
           }}
-
-          onSelectEvent= { selectedEvent => {
-            this.deleteEvent(selectedEvent)
+          onSelectEvent={selectedEvent => {
+            this.deleteEvent(selectedEvent);
           }}
         />
       </div>
     );
   }
 }
-
-export default SafeCalendar;

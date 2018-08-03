@@ -7,7 +7,6 @@ const avatarFallbackImage =
 export default class Profile extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       person: {
         name() {
@@ -18,6 +17,12 @@ export default class Profile extends Component {
         }
       }
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      person: new Person(loadUserData().profile)
+    });
   }
 
   render() {
@@ -32,17 +37,11 @@ export default class Profile extends Component {
         </div>
         <div id="info-container">
           <h3>Hey, {person.name() ? person.name() : "Nameless Person"}!</h3>
-          <button id="signout-button" onClick={handleSignOut.bind(this)}>
+          <button type="submit" id="signout-button" onClick={handleSignOut}>
             Signout
           </button>
         </div>
       </div>
     ) : null;
-  }
-
-  componentWillMount() {
-    this.setState({
-      person: new Person(loadUserData().profile)
-    });
   }
 }
