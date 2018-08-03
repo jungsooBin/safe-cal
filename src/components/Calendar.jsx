@@ -22,7 +22,7 @@ class SafeCalendar extends Component {
 
   async fetchData() {
     const options = { decrypt: true };
-    let file = await getFile("events2.json", options);
+    let file = await getFile("schedule.json", options);
 
 
     const events = await JSON.parse(file || "[]");
@@ -43,7 +43,7 @@ class SafeCalendar extends Component {
     });
     let events = this.state.events;
     const options = { encrypt: true };
-    const upload = await putFile("events2.json", JSON.stringify(events), options);
+    const upload = await putFile("schedule.json", JSON.stringify(events), options);
     // console.log(upload)
   }
   
@@ -53,7 +53,7 @@ class SafeCalendar extends Component {
     });
     let events = this.state.events;
     const options = { encrypt: true };
-    await putFile("events2.json", JSON.stringify(events), options);
+    await putFile("schedule.json", JSON.stringify(events), options);
   }
   
   render() {
