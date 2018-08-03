@@ -33,7 +33,7 @@ export default class SafeCalendar extends Component {
     });
   }
 
-  async saveNewEvent(event) {
+  async addEvent(event) {
     await this.setState({
       events: [...this.state.events, event]
     });
@@ -65,7 +65,7 @@ export default class SafeCalendar extends Component {
           }}
           onSelectSlot={async slotInfo => {
             const eventName = await prompt("What is the name of the event?");
-            this.saveNewEvent({
+            this.addEvent({
               name: eventName,
               start: new Date(slotInfo.start),
               end: new Date(slotInfo.end)
