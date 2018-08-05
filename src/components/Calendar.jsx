@@ -14,14 +14,7 @@ class PresentSafeCalendar extends Component {
     this.props.loadACalendar();
   }
 
-  async saveNewEvent(event) {
-    await this.setState({
-      events: [...this.state.events, event]
-    });
-    const events = this.state.events;
-    const options = { encrypt: true };
-    await putFile("schedule.json", JSON.stringify(events), options);
-  }
+  
 
   async deleteEvent(selectedEvent) {
     await this.setState({
@@ -33,6 +26,7 @@ class PresentSafeCalendar extends Component {
   }
 
   render() {
+    const {events} = this.props;
     return (
       <div id="calendar-container">
         <Calendar
