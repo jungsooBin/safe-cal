@@ -1,8 +1,8 @@
 
-import { getFile, putFile } from "blockstack";
+import { getFile, putFile } from 'blockstack';
 
 export const RECEIVE_A_CALENDAR = 'RECEIVE_A_CALENDAR';
-export const ADD_CALENDAR = 'ADD_CALENDAR';
+export const ADD_AN_EVENT = 'ADD_AN_EVENT';
 export const DELETE_A_CALENDAR = 'DELETE_A_CALENDAR';
 
 export const receiveACalendar = (events) => ({
@@ -10,8 +10,13 @@ export const receiveACalendar = (events) => ({
   payload: events
 })
 
-export const addACalendar = (events) => ({
-  type: RECEIVE_A_CALENDAR,
+export const addAnEvent = (events) => ({
+  type: ADD_AN_EVENT,
+  payload: events
+})
+
+export const deleteAnEvent = (events) => ({
+  type: DELETE_AN_EVENT,
   payload: events
 })
 
@@ -38,7 +43,7 @@ export const addEventToSingleCalendar = (events, event) => async (dispatch) => {
     const addedEvents = [...events, event];
     const options = { encrypt: true };
     await putFile('schedule.json', JSON.stringify(addedEvents), options);
-    return dispatch(addACalendar(addedEvents));
+    return dispatch(addAnEvent(addedEvents));
   } catch (error) {
     console.log(error);
   }
