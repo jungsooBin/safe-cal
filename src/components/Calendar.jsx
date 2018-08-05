@@ -36,7 +36,7 @@ class PresentSafeCalendar extends Component {
             });
           }}
           onSelectEvent={selectedEvent => {
-            this.props.deleteEvent(selectedEvent);
+            this.props.deleteEvent(events, selectedEvent);
           }}
         />
       </div>
