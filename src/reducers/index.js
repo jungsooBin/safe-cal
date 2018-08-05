@@ -10,7 +10,7 @@ import calendarReducer from './calendarReducer';
 
 const rootReducer = combineReducers({
   // contacts: contactReducer,
-  events: calendarReducer,
+  calendars: calendarReducer,
 });
 
 export default rootReducer;

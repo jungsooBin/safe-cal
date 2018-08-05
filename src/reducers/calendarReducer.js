@@ -3,7 +3,7 @@ import { getFile, putFile } from 'blockstack';
 
 export const RECEIVE_A_CALENDAR = 'RECEIVE_A_CALENDAR';
 export const ADD_AN_EVENT = 'ADD_AN_EVENT';
-export const DELETE_A_CALENDAR = 'DELETE_A_CALENDAR';
+export const DELETE_AN_EVENT = 'DELETE_AN_EVENT';
 
 export const receiveACalendar = (events) => ({
   type: RECEIVE_A_CALENDAR,
@@ -40,16 +40,54 @@ export const fetchSingleCalendar = () => async (dispatch) => {
 
 export const addEventToSingleCalendar = (events, event) => async (dispatch) => {
   try {
-    const addedEvents = [...events, event];
+    const eventsAfterAdd = [...events, event];
     const options = { encrypt: true };
-    await putFile('schedule.json', JSON.stringify(addedEvents), options);
-    return dispatch(addAnEvent(addedEvents));
+    await putFile('schedule.json', JSON.stringify(eventsAfterAdd), options);
+    return dispatch(addAnEvent(eventsAfterAdd));
   } catch (error) {
     console.log(error);
   }
 }
 
+export const deleteEvent = (events, selectedEvent) => async (dispatch) => {
+  try {
+    const eventsAfterDelete = [...this.state.events.filter(event => event !== selectedEvent)]
+    const options = { encrypt: true };
+    await putFile('schedule.json', JSON.stringify(eventsAfterDelete), options);
+    return dispatch(addAnEvent(eventsAfterDelete));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
+const initialState = {
+  events: [],
+};
+
+const calendarReducer = (calendarState = initialState, action) => {
+  switch (action.type) {
+    case RECEIVE_A_CALENDAR:
+      return {
+        ...calendarState, 
+        events: action.payload
+      }
+    case ADD_AN_EVENT:
+      return {
+        ...calendarState,
+        all: action.payload
+      }
+    case DELETE_AN_EVENT:
+      return {
+        ...calendarState,
+        campus: action.payload
+      }
+    default:
+      return calendarState;
+      
+  }
+}
+
+export default calendarReducer;
 
 
 
