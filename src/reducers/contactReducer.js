@@ -42,7 +42,7 @@ export const addFriendToList = (friends, friend) => async (dispatch) => {
   }
 }
 
-export const deleteEvent = (friends, selectedEvent) => async (dispatch) => {
+export const deleteFriend = (friends, selectedEvent) => async (dispatch) => {
   try {
     const friendsAfterDelete = [...friends.filter(event => event !== selectedEvent)]
     const options = { encrypt: true };

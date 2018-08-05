@@ -1,52 +1,71 @@
 import React, { Component } from "react";
 
 import {connect} from 'react-redux';
-import {fetchSingleCalendar, addEventToSingleCalendar, deleteEvent} from '../reducers/contactReducer'
+import {fetchFriends, addFriendToList, deleteFriend} from '../reducers/contactReducer'
 
 
-Calendar.setLocalizer(Calendar.momentLocalizer(moment));
+class PresentContacts extends Component {
+  constructor(props){
+    super(props)
 
-class PresentSafeCalendar extends Component {
+    this.state = {
+      contacts: this.props.contacts,
+      newContact:''
+    }
+
+    this.handleInputChange = this.handleInputChange.bind(this)
+  }
+
+  handleInputChange(event) {
+
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
   componentDidMount() {
-    this.props.loadACalendar();
+    this.props.loadFriends();
   }
 
   render() {
-    var userNames = this.props.subscribers.map((subscriber) => {
+    var userNames = this.props.contacts.map((friend) => {
       return (
-          <li key={subscriber.username}>{subscriber.username}</li>
+          <li key={friend.username}>{friend.username}</li>
       );
     });
     return (
-      <form onSubmit={this.addSubscriber.bind(this)}>
-        <h3>Find calendar</h3>
-        <input name="username" ref={element => this.input = element} defaultValue="Enter Blockstack.id" />
-        <button type="submit">Add</button>
-    
-        <ul>
-            {userNames}
-        </ul>
-				<div className="container">
-				<h3>Remove all friends</h3> 
-                <a className="button is-danger" onClick={this.props.removeAllSubscribers.bind(this)}>x</a>
-				</div>
+      <div id="calendar-container">
+
+        <form onSubmit={event =>this.props.handleSubmit(event, this.state.contacts, this.state.newContact)}>
+          <h3>Add Contact</h3>
+          <input name="rate" type = "text" value = {this.state.newContact || ''} onChange={this.handleInputChange} />
+          <button type="submit">Add</button>
+          
         </form>
+        <ul>
+          {userNames}
+        </ul>
+
+      </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    contacts: state.calendars.events
+    contacts: state.contacts.friends
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  loadACalendar: () => dispatch(fetchSingleCalendar()),
-  addEvent: (events, event) => dispatch(addEventToSingleCalendar(events, event)),
-  deleteEvent: (events, selectedEvent) => dispatch(deleteEvent(events, selectedEvent))
-
+  loadFriends: () => dispatch(fetchFriends()),
+  addFriend: (friends, friend) => dispatch(addFriendToList(friends, friend)),
+  deleteAFriend: (friends, friend) => dispatch(deleteFriend(friends, friend)),
+  handleSubmit: async (event, friends, friend) =>{
+    event.preventDefault();
+    await dispatch(addFriendToList(friends, friend));
+  }
 });
 
-const MySafeCalendar = connect(mapStateToProps, mapDispatchToProps)(PresentSafeCalendar)
-export default MySafeCalendar;
+const Contacts = connect(mapStateToProps, mapDispatchToProps)(PresentContacts)
+export default Contacts;
