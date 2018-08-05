@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Profile from "./Profile.jsx";
 import { Route, Switch, Redirect} from 'react-router-dom'
 
-import SafeCalendar from "./Calendar.jsx";
+import MySafeCalendar from "./Calendar.jsx";
+import Contacts from "./Contacts.jsx";
 import Signin from "./Signin.jsx";
 import {
   isSignInPending,
@@ -39,13 +40,14 @@ export default class App extends Component {
         ) : (
           <div id="app-container">
             <Profile handleSignOut={this.handleSignOut} />
-              <Switch>
-                <Route exact path ="/myCalendar" component={SafeCalendar} />
-                <Redirect to="/" />
-              </Switch>
+            <Switch>
+                <Route exact path ="/" component={MySafeCalendar}/>
+                <Route exact path ="/contacts" component={Contacts}/>
+            </Switch>
           </div>
         )}
       </div>
     );
   }
 }
+

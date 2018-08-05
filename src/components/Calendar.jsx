@@ -56,5 +56,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 });
 
-const SafeCalendar = connect(mapStateToProps, mapDispatchToProps)(PresentSafeCalendar)
-export default SafeCalendar;
+const MySafeCalendar = connect(mapStateToProps, mapDispatchToProps)(PresentSafeCalendar)
+export default MySafeCalendar;

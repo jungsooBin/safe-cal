@@ -40,14 +40,22 @@ export default class Profile extends Component {
         </div>
         <div id="info-container">
           <h3>Hey, {person.name() ? person.name() : "Nameless Person"}!</h3>
-          <button type="submit" id="signout-button" onClick={handleSignOut}>
-            Signout
-          </button>
+          
+          <Link to="/">
+            <button type="submit" id="contacts-button">
+              MyCal
+            </button>
+          </Link>
+
           <Link to="/contacts">
             <button type="submit" id="contacts-button">
               Contacts
             </button>
           </Link>
+
+          <button type="submit" id="signout-button" onClick={handleSignOut}>
+            Signout
+          </button>
           
 
         </div>
