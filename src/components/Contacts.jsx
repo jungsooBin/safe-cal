@@ -1,7 +1,12 @@
 import React, { Component } from "react";
+import Calendar from "react-big-calendar";
+import moment from "moment";
 import {connect} from 'react-redux';
+import {fetchSingleCalendar, addEventToSingleCalendar, deleteEvent} from '../reducers/calendarReducer'
 
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
+Calendar.setLocalizer(Calendar.momentLocalizer(moment));
 
 class PresentSafeCalendar extends Component {
   componentDidMount() {
@@ -9,31 +14,25 @@ class PresentSafeCalendar extends Component {
   }
 
   render() {
-    const {events} = this.props;
+    var userNames = this.props.subscribers.map((subscriber) => {
+      return (
+          <li key={subscriber.username}>{subscriber.username}</li>
+      );
+    });
     return (
-      <div id="calendar-container">
-        <Calendar
-          selectable
-          defaultDate={new Date()}
-          defaultView="week"
-          events={events}
-          views={{
-            week: true,
-            day: true
-          }}
-          onSelectSlot={async slotInfo => {
-            const eventName = await prompt("What is the name of the event?");
-            this.props.addEvent(events, {
-              name: eventName,
-              start: new Date(slotInfo.start),
-              end: new Date(slotInfo.end)
-            });
-          }}
-          onSelectEvent={selectedEvent => {
-            this.props.deleteEvent(events, selectedEvent);
-          }}
-        />
-      </div>
+      <form onSubmit={this.addSubscriber.bind(this)}>
+        <h3>Find calendar</h3>
+        <input name="username" ref={element => this.input = element} defaultValue="Enter Blockstack.id" />
+        <button type="submit">Add</button>
+    
+        <ul>
+            {userNames}
+        </ul>
+				<div className="container">
+				<h3>Remove all friends</h3> 
+                <a className="button is-danger" onClick={this.props.removeAllSubscribers.bind(this)}>x</a>
+				</div>
+        </form>
     );
   }
 }
@@ -51,5 +50,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 });
 
-const SafeCalendar = connect(mapStateToProps, mapDispatchToProps)(PresentSafeCalendar)
-export default SafeCalendar;
+const MySafeCalendar = connect(mapStateToProps, mapDispatchToProps)(PresentSafeCalendar)
+export default MySafeCalendar;
