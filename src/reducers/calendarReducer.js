@@ -70,22 +70,21 @@ const calendarReducer = (calendarState = initialState, action) => {
       return {
         ...calendarState, 
         events: action.payload
-      }
+      };
     case ADD_AN_EVENT:
       return {
         ...calendarState,
         all: action.payload
-      }
+      };
     case DELETE_AN_EVENT:
       return {
         ...calendarState,
         campus: action.payload
-      }
+      };
     default:
-      return calendarState;
-      
+      return calendarState    
   }
-}
+};
 
 export default calendarReducer;
 

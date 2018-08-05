@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import Calendar from "react-big-calendar";
 import moment from "moment";
 import {connect} from 'react-redux';
-import { getFile, putFile } from "blockstack";
-import {fetchSingleCalendar} from '../reducers/calendarReducer'
+import {fetchSingleCalendar, addEventToSingleCalendar, deleteEvent} from '../reducers/calendarReducer'
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
@@ -14,17 +13,6 @@ class PresentSafeCalendar extends Component {
     this.props.loadACalendar();
   }
 
-  
-
-  async deleteEvent(selectedEvent) {
-    await this.setState({
-      events: [...this.state.events.filter(event => event !== selectedEvent)]
-    });
-    const events = this.state.events;
-    const options = { encrypt: true };
-    await putFile("schedule.json", JSON.stringify(events), options);
-  }
-
   render() {
     const {events} = this.props;
     return (
@@ -33,14 +21,14 @@ class PresentSafeCalendar extends Component {
           selectable
           defaultDate={new Date()}
           defaultView="week"
-          events={this.state.events}
+          events={events}
           views={{
             week: true,
             day: true
           }}
           onSelectSlot={async slotInfo => {
             const eventName = await prompt("What is the name of the event?");
-            this.saveNewEvent({
+            this.addEvent(events, {
               name: eventName,
               start: new Date(slotInfo.start),
               end: new Date(slotInfo.end)
@@ -57,13 +45,16 @@ class PresentSafeCalendar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    events: state.events
-  }
-}
+    events: state.calendars.events
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
-  loadACalendar: () => dispatch(fetchSingleCalendar())
-})
+  loadACalendar: () => dispatch(fetchSingleCalendar()),
+  addEvent: (events, event) => dispatch(addEventToSingleCalendar(events, event)),
+  deleteEvent: (events, selectedEvent) => dispatch(deleteEvent(events, selectedEvent))
+
+});
 
 const SafeCalendar = connect(mapStateToProps, mapDispatchToProps)(PresentSafeCalendar)
 export default SafeCalendar;
