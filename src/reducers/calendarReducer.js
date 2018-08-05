@@ -51,7 +51,7 @@ export const addEventToSingleCalendar = (events, event) => async (dispatch) => {
 
 export const deleteEvent = (events, selectedEvent) => async (dispatch) => {
   try {
-    const eventsAfterDelete = [...this.state.events.filter(event => event !== selectedEvent)]
+    const eventsAfterDelete = [...events.filter(event => event !== selectedEvent)]
     const options = { encrypt: true };
     await putFile('myCal.json', JSON.stringify(eventsAfterDelete), options);
     return dispatch(addAnEvent(eventsAfterDelete));

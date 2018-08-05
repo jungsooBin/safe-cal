@@ -14,6 +14,7 @@ class PresentSafeCalendar extends Component {
   }
 
   render() {
+    console.log(this)
     const {events} = this.props;
     return (
       <div id="calendar-container">
@@ -28,14 +29,14 @@ class PresentSafeCalendar extends Component {
           }}
           onSelectSlot={async slotInfo => {
             const eventName = await prompt("What is the name of the event?");
-            this.addEvent(events, {
+            this.props.addEvent(events, {
               name: eventName,
               start: new Date(slotInfo.start),
               end: new Date(slotInfo.end)
             });
           }}
           onSelectEvent={selectedEvent => {
-            this.deleteEvent(selectedEvent);
+            this.props.deleteEvent(selectedEvent);
           }}
         />
       </div>
