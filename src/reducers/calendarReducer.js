@@ -25,7 +25,7 @@ export const deleteAnEvent = (events) => ({
 export const fetchSingleCalendar = () => async (dispatch) => {
   try {
     const options = { decrypt: true };
-    const file = await getFile('schedule.json', options);
+    const file = await getFile('myCal.json', options);
     const events = await JSON.parse(file || '[]');
     const fetchEvents = events.map(event => ({
       name: event.name,
@@ -42,7 +42,7 @@ export const addEventToSingleCalendar = (events, event) => async (dispatch) => {
   try {
     const eventsAfterAdd = [...events, event];
     const options = { encrypt: true };
-    await putFile('schedule.json', JSON.stringify(eventsAfterAdd), options);
+    await putFile('myCal.json', JSON.stringify(eventsAfterAdd), options);
     return dispatch(addAnEvent(eventsAfterAdd));
   } catch (error) {
     console.log(error);
@@ -53,7 +53,7 @@ export const deleteEvent = (events, selectedEvent) => async (dispatch) => {
   try {
     const eventsAfterDelete = [...this.state.events.filter(event => event !== selectedEvent)]
     const options = { encrypt: true };
-    await putFile('schedule.json', JSON.stringify(eventsAfterDelete), options);
+    await putFile('myCal.json', JSON.stringify(eventsAfterDelete), options);
     return dispatch(addAnEvent(eventsAfterDelete));
   } catch (error) {
     console.log(error);
