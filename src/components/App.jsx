@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Profile from "./Profile.jsx";
-import Routes from '../routes'
+import { Route, Switch, Redirect} from 'react-router-dom'
+
+import SafeCalendar from "./Calendar.jsx";
 import Signin from "./Signin.jsx";
 import {
   isSignInPending,
@@ -37,8 +39,10 @@ export default class App extends Component {
         ) : (
           <div id="app-container">
             <Profile handleSignOut={this.handleSignOut} />
-            <Routes />
-            <SafeCalendar />
+              <Switch>
+                <Route exact path ="/myCalendar" component={SafeCalendar} />
+                <Redirect to="/" />
+              </Switch>
           </div>
         )}
       </div>
