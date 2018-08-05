@@ -1,36 +1,17 @@
 import React, { Component } from "react";
 import Calendar from "react-big-calendar";
 import moment from "moment";
+import {connect} from 'react-redux';
 import { getFile, putFile } from "blockstack";
+import {fetchSingleCalendar} from '../reducers/calendarReducer'
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 
 Calendar.setLocalizer(Calendar.momentLocalizer(moment));
 
-export default class SafeCalendar extends Component {
-  constructor() {
-    super();
-    this.state = {
-      events: []
-    };
-  }
-
+class PresentSafeCalendar extends Component {
   componentDidMount() {
-    this.fetchData();
-  }
-
-  async fetchData() {
-    const options = { decrypt: true };
-    const file = await getFile("schedule.json", options);
-    const events = await JSON.parse(file || "[]");
-    const fetchEvents = events.map(event => ({
-      name: event.name,
-      start: new Date(event.start),
-      end: new Date(event.end)
-    }));
-    this.setState({
-      events: fetchEvents
-    });
+    this.props.loadACalendar();
   }
 
   async saveNewEvent(event) {
@@ -79,3 +60,16 @@ export default class SafeCalendar extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    events: state.events
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  loadACalendar: () => dispatch(fetchSingleCalendar())
+})
+
+const SafeCalendar = connect(mapStateToProps, mapDispatchToProps)(PresentSafeCalendar)
+export default SafeCalendar;

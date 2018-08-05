@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { isSignInPending, loadUserData, Person } from "blockstack";
+import {Link} from 'react-router-dom'
+import Contacts from "./Contacts.jsx";
+
 
 const avatarFallbackImage =
   "https://s3.amazonaws.com/onename/avatar-placeholder.png";
@@ -18,7 +21,7 @@ export default class Profile extends Component {
       }
     };
   }
-
+  
   componentDidMount() {
     this.setState({
       person: new Person(loadUserData().profile)
@@ -40,6 +43,13 @@ export default class Profile extends Component {
           <button type="submit" id="signout-button" onClick={handleSignOut}>
             Signout
           </button>
+          <Link to="/contacts">
+            <button type="submit" id="contacts-button">
+              Contacts
+            </button>
+          </Link>
+          
+
         </div>
       </div>
     ) : null;
