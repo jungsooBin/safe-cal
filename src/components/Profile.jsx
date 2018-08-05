@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { isSignInPending, loadUserData, Person } from "blockstack";
-import {Link} from 'react-router-dom'
 import Contacts from "./Contacts.jsx";
+import {Link} from 'react-router-dom'
 
 
 const avatarFallbackImage =
