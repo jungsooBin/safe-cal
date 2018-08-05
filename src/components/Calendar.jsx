@@ -14,7 +14,6 @@ class PresentSafeCalendar extends Component {
   }
 
   render() {
-    console.log(this)
     const {events} = this.props;
     return (
       <div id="calendar-container">
