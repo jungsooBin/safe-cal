@@ -2,7 +2,19 @@ import React, { Component } from "react";
 
 import {connect} from 'react-redux';
 import {fetchFriends, addFriendToList, deleteFriend} from '../reducers/contactReducer'
+import "react-big-calendar/lib/css/react-big-calendar.css";
 
+const userNames = (friends) => {
+  if(friends) {
+    this.props.contacts.map((friend) => {
+      return (
+          <li key={friend.username}>{friend.username}</li>
+      );
+  })}
+  else {
+    return <p> there is no contact</p>
+  }
+};
 
 class PresentContacts extends Component {
   constructor(props){
@@ -28,22 +40,18 @@ class PresentContacts extends Component {
   }
 
   render() {
-    var userNames = this.props.contacts.map((friend) => {
-      return (
-          <li key={friend.username}>{friend.username}</li>
-      );
-    });
+    
     return (
       <div id="calendar-container">
 
-        <form onSubmit={event =>this.props.handleSubmit(event, this.state.contacts, this.state.newContact)}>
+        <form onSubmit={event => this.props.handleSubmit(event, this.state.contacts, this.state.newContact)}>
           <h3>Add Contact</h3>
           <input name="rate" type = "text" value = {this.state.newContact || ''} onChange={this.handleInputChange} />
           <button type="submit">Add</button>
           
         </form>
         <ul>
-          {userNames}
+          {userNames(this.props.contacts.friends)}
         </ul>
 
       </div>
