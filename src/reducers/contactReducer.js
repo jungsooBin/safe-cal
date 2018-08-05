@@ -15,7 +15,7 @@ export const addAFriend = (friends) => ({
   payload: friends
 })
 
-export const deleteAnEvent = (friends) => ({
+export const deleteAFriend = (friends) => ({
   type: DELETE_A_FRIEND,
   payload: friends
 })
@@ -31,12 +31,12 @@ export const fetchFriends = () => async (dispatch) => {
   }
 }
 
-export const addEventToSingleCalendar = (friends, event) => async (dispatch) => {
+export const addFriendToList = (friends, friend) => async (dispatch) => {
   try {
-    const friendsAfterAdd = [...friends, event];
+    const friendsAfterAdd = [...friends, friend];
     const options = { encrypt: true };
     await putFile('myFriends.json', JSON.stringify(friendsAfterAdd), options);
-    return dispatch(addAnEvent(friendsAfterAdd));
+    return dispatch(addAFriend(friendsAfterAdd));
   } catch (error) {
     console.log(error);
   }
@@ -53,29 +53,29 @@ export const deleteEvent = (friends, selectedEvent) => async (dispatch) => {
   }
 }
 
-const initialState = {
+const friendState = {
   friends: [],
 };
 
-const calendarReducer = (calendarState = initialState, action) => {
+const calendarReducer = (friendState = initialState, action) => {
   switch (action.type) {
-    case RECEIVE_A_CALENDAR:
+    case RECEIVE_A_FRIENDS:
       return {
-        ...calendarState, 
+        ...friendState, 
         friends: action.payload
       };
-    case ADD_AN_EVENT:
+    case ADD_A_FRIEND:
       return {
-        ...calendarState,
+        ...friendState,
         friends: action.payload
       };
-    case DELETE_AN_EVENT:
+    case DELETE_A_FRIEND:
       return {
-        ...calendarState,
+        ...friendState,
         friends: action.payload
       };
     default:
-      return calendarState    
+      return friendState    
   }
 };
 

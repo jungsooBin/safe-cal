@@ -14,6 +14,11 @@ class PresentSafeCalendar extends Component {
   }
 
   render() {
+    var userNames = this.props.subscribers.map((subscriber) => {
+      return (
+          <li key={subscriber.username}>{subscriber.username}</li>
+      );
+    });
     return (
       <form onSubmit={this.addSubscriber.bind(this)}>
         <h3>Find calendar</h3>
@@ -34,7 +39,7 @@ class PresentSafeCalendar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    events: state.calendars.events
+    contacts: state.calendars.events
   };
 };
 

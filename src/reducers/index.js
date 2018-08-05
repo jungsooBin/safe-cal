@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-// import contactReducer from './contactReducer';
+import contactReducer from './contactReducer';
 import calendarReducer from './calendarReducer';
 
 
@@ -9,7 +9,7 @@ import calendarReducer from './calendarReducer';
 // import {combineReducers} from 'redux'
 
 const rootReducer = combineReducers({
-  // contacts: contactReducer,
+  contacts: contactReducer,
   calendars: calendarReducer,
 });
 
