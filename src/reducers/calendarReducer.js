@@ -20,8 +20,6 @@ export const deleteAnEvent = (events) => ({
   payload: events
 })
 
-
-
 export const fetchSingleCalendar = () => async (dispatch) => {
   try {
     const options = { decrypt: true };
@@ -55,7 +53,7 @@ export const deleteEvent = (events, selectedEvent) => async (dispatch) => {
     const eventsAfterDelete = [...events.filter(event => event !== selectedEvent)]
     const options = { encrypt: true };
     await putFile('myCal.json', JSON.stringify(eventsAfterDelete), options);
-    return dispatch(addAnEvent(eventsAfterDelete));
+    return dispatch(deleteAnEvent(eventsAfterDelete));
   } catch (error) {
     console.log(error);
   }
@@ -75,12 +73,12 @@ const calendarReducer = (calendarState = initialState, action) => {
     case ADD_AN_EVENT:
       return {
         ...calendarState,
-        all: action.payload
+        events: action.payload
       };
     case DELETE_AN_EVENT:
       return {
         ...calendarState,
-        campus: action.payload
+        events: action.payload
       };
     default:
       return calendarState    
