@@ -47,17 +47,17 @@ export const deleteEvent = (friends, selectedEvent) => async (dispatch) => {
     const friendsAfterDelete = [...friends.filter(event => event !== selectedEvent)]
     const options = { encrypt: true };
     await putFile('myFriends.json', JSON.stringify(friendsAfterDelete), options);
-    return dispatch(deleteAnEvent(friendsAfterDelete));
+    return dispatch(deleteAFriend(friendsAfterDelete));
   } catch (error) {
     console.log(error);
   }
 }
 
-const friendState = {
+const initialState = {
   friends: [],
 };
 
-const calendarReducer = (friendState = initialState, action) => {
+const contactReducer = (friendState = initialState, action) => {
   switch (action.type) {
     case RECEIVE_A_FRIENDS:
       return {
@@ -75,11 +75,11 @@ const calendarReducer = (friendState = initialState, action) => {
         friends: action.payload
       };
     default:
-      return friendState    
+      return friendState;    
   }
 };
 
-export default calendarReducer;
+export default contactReducer;
 
 
 
