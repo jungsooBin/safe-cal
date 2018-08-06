@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Profile from "./Profile.jsx";
-import { Route, Switch, Redirect} from 'react-router-dom'
+import { Route, Switch } from "react-router-dom";
 
 import MySafeCalendar from "./Calendar.jsx";
 import Contacts from "./Contacts.jsx";
@@ -41,8 +41,8 @@ export default class App extends Component {
           <div id="app-container">
             <Profile handleSignOut={this.handleSignOut} />
             <Switch>
-                <Route exact path ="/" component={MySafeCalendar}/>
-                <Route exact path ="/contacts" component={Contacts}/>
+              <Route exact path="/" component={MySafeCalendar} />
+              <Route exact path="/contacts" component={Contacts} />
             </Switch>
           </div>
         )}
@@ -50,4 +50,3 @@ export default class App extends Component {
     );
   }
 }
-

@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { isSignInPending, loadUserData, Person } from "blockstack";
 import Contacts from "./Contacts.jsx";
-import {Link} from 'react-router-dom'
-
+import { Link } from "react-router-dom";
 
 const avatarFallbackImage =
   "https://s3.amazonaws.com/onename/avatar-placeholder.png";
@@ -21,7 +20,7 @@ export default class Profile extends Component {
       }
     };
   }
-  
+
   componentDidMount() {
     this.setState({
       person: new Person(loadUserData().profile)
@@ -40,24 +39,15 @@ export default class Profile extends Component {
         </div>
         <div id="info-container">
           <h3>Hey, {person.name() ? person.name() : "Nameless Person"}!</h3>
-          
           <Link to="/">
-            <button type="submit" id="contacts-button">
-              MyCal
-            </button>
+            <button type="submit">MyCal</button>
           </Link>
-
           <Link to="/contacts">
-            <button type="submit" id="contacts-button">
-              Contacts
-            </button>
+            <button type="submit">Contacts</button>
           </Link>
-
-          <button type="submit" id="signout-button" onClick={handleSignOut}>
+          <button type="submit" onClick={handleSignOut}>
             Signout
           </button>
-          
-
         </div>
       </div>
     ) : null;
