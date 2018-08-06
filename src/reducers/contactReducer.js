@@ -33,7 +33,10 @@ export const fetchFriends = () => async (dispatch) => {
 
 export const addFriendToList = (friends, friend) => async (dispatch) => {
   try {
-    const friendsAfterAdd = [...friends, friend];
+    const keyData = await getFile('key.json', {
+      username: friend
+    });
+    const friendsAfterAdd = [...friends, {username: friend, publicKey: JSON.parse(keyData)}];
     const options = { encrypt: true };
     await putFile('myFriends.json', JSON.stringify(friendsAfterAdd), options);
     return dispatch(addAFriend(friendsAfterAdd));
